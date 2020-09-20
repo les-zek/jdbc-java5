@@ -14,7 +14,7 @@ public class CreateTableStatementDemo {
         Statement createTable = connection.createStatement();
         createTable.execute("drop table if exists demo");
         boolean execute = createTable.execute(
-                "create table demo (id integer primary key, name varchar(20), points integer)"
+                "create table demo (id integer primary key auto_increment, name varchar(20), points integer)"
         );
         System.out.println("Wartość zwrócona przez polecenie create table: " + execute);
 
