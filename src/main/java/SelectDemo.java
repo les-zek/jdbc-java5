@@ -27,6 +27,7 @@ public class SelectDemo {
     }
 
     public static void printDemoTable(ResultSet resultSet) throws SQLException {
+        System.out.println("---------------------------T A B L E ---------------------------");
         while (resultSet.next()) {
             System.out.print("Id: " + resultSet.getInt("id"));
             /*
@@ -40,5 +41,7 @@ public class SelectDemo {
             System.out.print(" , points: "+ (isPointWasNull ? "null" : points));
             System.out.println(" , name: " + resultSet.getString("name"));
         }
+        System.out.println("----------------------------------------------------------------");
+
     }
 }

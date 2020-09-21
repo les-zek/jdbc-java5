@@ -6,10 +6,13 @@ public class CRUDApp {
     static Scanner scanner = new Scanner(System.in);
 
     public static int menu() {
+        System.out.println("-----------------");
         System.out.println("1. Utwórz tabelę");
         System.out.println("2. Dodaj rekord");
         System.out.println("3. Wyświetl tabelę");
         System.out.println("0. Wyjście");
+        System.out.println("-----------------");
+
         while (!scanner.hasNextInt()) {
             scanner.nextLine();
         }
