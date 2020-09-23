@@ -7,7 +7,7 @@ public class SelectDemo {
         Connection connection = ConnectionDemo.getConnection();
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj literę: ");
+        System.out.println("Podaj numer ID : ");
         String letter = scanner.next();  // uwaga na nextline()!!! podatne na SQL INJECTION
     //    Statement find = connection.createStatement();
     //    ResultSet resultSet = find.executeQuery(
