@@ -14,6 +14,7 @@ public class CRUDApp {
         System.out.println("3. Wyświetl tabelę");
         System.out.println("4. Znajdź rekord z podanym ID");
         System.out.println("5. Usuń rekord z podanym ID");
+        System.out.println("6. Zmień rekord z podanym ID");
 
 
         System.out.println("0. Wyjście");
@@ -98,7 +99,7 @@ public class CRUDApp {
         connection.close();
     }
 
-    public static User findUserById(int id, boolean delete) throws IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+    public static User findUserById(int id, boolean delete, boolean update) throws IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         Connection connection = ConnectionDemo.getConnection();
         Statement selectAll = connection.createStatement(
                 ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -119,10 +120,40 @@ public class CRUDApp {
                 if (delete) {
                     records.deleteRow();
                 }
-                return user;
+                if (update) {
+                    boolean anyChanges = false;
+                    System.out.println("--- FOUND USER WITH GIVEN ID ---");
+                    System.out.println("Give the user NEW email :");
+                    scanner.nextLine(); //potrzebne, jeśli wczytujemy napis po wczytaniu liczby
+                    String email = scanner.nextLine();
+                    if (email != null && !email.trim().isEmpty()) {
+                        anyChanges = true;
+                        records.updateString("email", email);
+                        user.setEmail(email);
+                    }
+                    System.out.println("Give the user NEW password  :");
+                    String password = scanner.nextLine();
+                    if (password != null && !password.trim().isEmpty()) {
+                        anyChanges = true;
+                        records.updateString("password", password);
+                        user.setPassword(password);
 
+                    }
+                    System.out.println("Input age of the user :");
+                    int age = scanner.nextInt();
+                    if (age > 0) {
+                        anyChanges = true;
+                        records.updateInt("age", age);
+                        user.setAge(age);
+                    }
+                    if (anyChanges) records.updateRow();
+
+                }
+                connection.close();
+                return user;
             }
         }
+        connection.close();
         return null;
     }
 
@@ -147,7 +178,7 @@ public class CRUDApp {
                     // znajdź rekord wg id
                     System.out.println("Input ID of the user :");
                     int idUser = scanner.nextInt();
-                    User foundUser = findUserById(idUser, false);
+                    User foundUser = findUserById(idUser, false, false);
                     System.out.println("------------USER DATA  START---------------");
                     if (foundUser != null) {
                         System.out.println(foundUser.toString());
@@ -158,10 +189,10 @@ public class CRUDApp {
                     System.out.println("------------USER DATA    END---------------");
                     break;
                 case 5:
-                    // znajdź rekord wg id
+                    // usuń rekord wg id
                     System.out.println("Input ID of the user :");
                     int delUser = scanner.nextInt();
-                    User deletedUser = findUserById(delUser, true);
+                    User deletedUser = findUserById(delUser, true, false);
                     System.out.println("------------USER DATA  START---------------");
                     if (deletedUser != null) {
                         System.out.println("!!!  DELETED USER !!!");
@@ -169,6 +200,22 @@ public class CRUDApp {
                     } else {
                         System.out.println(" No User with given ID ");
                         System.out.println("!!!  NO USER DELETED !!!");
+
+                    }
+                    ;
+                    System.out.println("------------USER DATA    END---------------");
+                    break;
+                case 6:
+                    // zmień  rekord wg id
+                    System.out.println("Input ID of the user :");
+                    int updateUserId = scanner.nextInt();
+                    User updatedUser = findUserById(updateUserId, false, true);
+                    System.out.println("------------USER DATA  START---------------");
+                    if (updatedUser != null) {
+                        System.out.println("!!!  UPDATED DATA !!!");
+                        System.out.println(updatedUser.toString());
+                    } else {
+                        System.out.println(" No User with given ID ");
 
                     }
                     ;
