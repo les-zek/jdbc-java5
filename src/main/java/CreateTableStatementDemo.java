@@ -5,7 +5,10 @@ import java.sql.Statement;
 
 public class CreateTableStatementDemo {
 
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+    public static void main(String[] args)
+            throws IllegalAccessException, InstantiationException,
+                        SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException
+    {
         createTableDemo();
     }
 
