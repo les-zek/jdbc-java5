@@ -8,14 +8,17 @@ public class CRUDApp {
     static Scanner scanner = new Scanner(System.in);
 
     public static int menu() {
-        System.out.println("-----------------");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-");
         System.out.println("1. Utwórz tabelę");
         System.out.println("2. Dodaj rekord");
         System.out.println("3. Wyświetl tabelę");
-        System.out.println("4. Znajdź rekord wg id");
+        System.out.println("4. Znajdź rekord z podanym ID");
+        System.out.println("5. Usuń rekord z podanym ID");
+
 
         System.out.println("0. Wyjście");
-        System.out.println("-----------------");
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+
 
         while (!scanner.hasNextInt()) {
             scanner.nextLine();
@@ -95,9 +98,12 @@ public class CRUDApp {
         connection.close();
     }
 
-    public static User findUserById(int id) throws IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+    public static User findUserById(int id, boolean delete) throws IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         Connection connection = ConnectionDemo.getConnection();
-        Statement selectAll = connection.createStatement();
+        Statement selectAll = connection.createStatement(
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE
+        );
         ResultSet records = selectAll.executeQuery("select * from users");
         boolean found = false;
         while (records.next() && !found) {
@@ -110,6 +116,9 @@ public class CRUDApp {
                         records.getInt("age")
                 );
                 found = true;
+                if (delete) {
+                    records.deleteRow();
+                }
                 return user;
 
             }
@@ -138,17 +147,32 @@ public class CRUDApp {
                     // znajdź rekord wg id
                     System.out.println("Input ID of the user :");
                     int idUser = scanner.nextInt();
-                    User foundUser = findUserById(idUser);
+                    User foundUser = findUserById(idUser, false);
                     System.out.println("------------USER DATA  START---------------");
                     if (foundUser != null) {
                         System.out.println(foundUser.toString());
                     } else {
                         System.out.println(" No User with given ID ");
-                    };
-
+                    }
+                    ;
                     System.out.println("------------USER DATA    END---------------");
+                    break;
+                case 5:
+                    // znajdź rekord wg id
+                    System.out.println("Input ID of the user :");
+                    int delUser = scanner.nextInt();
+                    User deletedUser = findUserById(delUser, true);
+                    System.out.println("------------USER DATA  START---------------");
+                    if (deletedUser != null) {
+                        System.out.println("!!!  DELETED USER !!!");
+                        System.out.println(deletedUser.toString());
+                    } else {
+                        System.out.println(" No User with given ID ");
+                        System.out.println("!!!  NO USER DELETED !!!");
 
-
+                    }
+                    ;
+                    System.out.println("------------USER DATA    END---------------");
                     break;
                 case 0:
                     System.exit(0);
