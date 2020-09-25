@@ -12,6 +12,8 @@ public class CRUDApp {
         System.out.println("1. Utwórz tabelę");
         System.out.println("2. Dodaj rekord");
         System.out.println("3. Wyświetl tabelę");
+        System.out.println("4. Znajdź rekord wg id");
+
         System.out.println("0. Wyjście");
         System.out.println("-----------------");
 
@@ -93,8 +95,31 @@ public class CRUDApp {
         connection.close();
     }
 
+    public static User findUserById(int id) throws IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+        Connection connection = ConnectionDemo.getConnection();
+        Statement selectAll = connection.createStatement();
+        ResultSet records = selectAll.executeQuery("select * from users");
+        boolean found = false;
+        while (records.next() && !found) {
+            int actualId = records.getInt("id");
+            if (actualId == id) {
+                User user = new User(
+                        actualId,
+                        records.getString("email"),
+                        records.getString("password"),
+                        records.getInt("age")
+                );
+                found = true;
+                return user;
 
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+            }
+        }
+        return null;
+    }
+
+
+    public static void main(String[] args) throws
+            IllegalAccessException, InstantiationException, SQLException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         while (true) {
             switch (menu()) {
                 case 1:
@@ -107,17 +132,23 @@ public class CRUDApp {
                     break;
                 case 3:
                     //wyświetl tabelę
-/*                    Connection connection = ConnectionDemo.getConnection();
-
-                    Statement selectAll = connection.createStatement(
-                            ResultSet.TYPE_SCROLL_INSENSITIVE,
-                            ResultSet.CONCUR_READ_ONLY);
-                    ResultSet records = selectAll.executeQuery("select * from users");
-
-                    SelectDemo.printDemoTable(records);
-                    connection.close();
-  */
                     printUserTable();
+                    break;
+                case 4:
+                    // znajdź rekord wg id
+                    System.out.println("Input ID of the user :");
+                    int idUser = scanner.nextInt();
+                    User foundUser = findUserById(idUser);
+                    System.out.println("------------USER DATA  START---------------");
+                    if (foundUser != null) {
+                        System.out.println(foundUser.toString());
+                    } else {
+                        System.out.println(" No User with given ID ");
+                    };
+
+                    System.out.println("------------USER DATA    END---------------");
+
+
                     break;
                 case 0:
                     System.exit(0);
