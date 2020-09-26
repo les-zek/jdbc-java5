@@ -53,11 +53,22 @@ public class QuestionRepositoryJpa implements QuestionRepository {
             return;
         }
         entity.setBody(question.getBody());
-        
+        entity.setOption1(question.getOption1());
+        entity.setOption2(question.getOption2());
+        entity.setOption3(question.getOption3());
+        entity.setOption4(question.getOption4());
+        entity.setPoints(question.getPoints());
+        entity.setValidOption(question.getValidOption());
+        em.getTransaction().commit();
+        em.close();
+
+
     }
 
     @Override
     public List<Question> findAll() {
-        return null;
+        EntityManager em = persistence.getEntityManager();
+
+        return em.createQuery("from Question", Question.class).getResultList();
     }
 }
