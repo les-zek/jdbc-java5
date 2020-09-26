@@ -5,7 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public enum MyPersistence {
-    JAVA5("java5");
+    JAVA5("java5"),
+    QUIZ("quiz");
     // public static MyPersistence JAVA5 = new MyPersistence("java5");
     private final EntityManagerFactory factory;
 
