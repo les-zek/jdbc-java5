@@ -1,3 +1,5 @@
+package jdbc;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -164,7 +166,7 @@ public class CRUDAppLZ {
             switch (menu()) {
                 case 1:
                     //TODO zdefiniować metode tworzenie własnej tabeli
-//                    CreateTableStatementDemo.createTableDemo();
+//                    jdbc.CreateTableStatementDemo.createTableDemo();
                     createTableUsers();
                     break;
                 case 2:
@@ -183,7 +185,7 @@ public class CRUDAppLZ {
                     if (foundUser != null) {
                         System.out.println(foundUser.toString());
                     } else {
-                        System.out.println(" No User with given ID ");
+                        System.out.println(" No jdbc.User with given ID ");
                     }
                     ;
                     System.out.println("------------USER DATA    END---------------");
@@ -198,7 +200,7 @@ public class CRUDAppLZ {
                         System.out.println("!!!  DELETED USER !!!");
                         System.out.println(deletedUser.toString());
                     } else {
-                        System.out.println(" No User with given ID ");
+                        System.out.println(" No jdbc.User with given ID ");
                         System.out.println("!!!  NO USER DELETED !!!");
 
                     }
@@ -215,7 +217,7 @@ public class CRUDAppLZ {
                         System.out.println("!!!  UPDATED DATA !!!");
                         System.out.println(updatedUser.toString());
                     } else {
-                        System.out.println(" No User with given ID ");
+                        System.out.println(" No jdbc.User with given ID ");
 
                     }
                     ;

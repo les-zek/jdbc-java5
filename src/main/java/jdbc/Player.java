@@ -1,3 +1,5 @@
+package jdbc;
+
 public class Player {
     private int id;
     private String name;
@@ -35,7 +37,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "jdbc.Player{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", points=" + points +

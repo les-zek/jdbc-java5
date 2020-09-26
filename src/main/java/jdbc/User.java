@@ -1,3 +1,5 @@
+package jdbc;
+
 public class User
 {
     private int id;
@@ -46,7 +48,7 @@ public class User
 
     @Override
     public String toString() {
-        return "User{" +
+        return "jdbc.User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
