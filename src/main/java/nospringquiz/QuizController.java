@@ -14,10 +14,10 @@ public class QuizController {
     ListIterator<Question> questions;
     Question currentQuestion;
 
-    public QuizController(QuizService quizService) {
+    public QuizController(QuizService quizService, long quizId) {
         this.quizService = quizService;
 
-        questions = quizService.getQuiz(0).listIterator();
+        questions = quizService.getQuiz(quizId).listIterator();
     }
 
     public Question next() {

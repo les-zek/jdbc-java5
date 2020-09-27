@@ -67,7 +67,7 @@ public class QuizApp {
         initData(questionRepository, quizRepository);
 
         QuizService quizService = new QuizServiceJpa(quizRepository);
-        QuizController controller = new QuizController(quizService);
+        QuizController controller = new QuizController(quizService,1);
         Scanner scanner = new Scanner(System.in);
         while (true) {
             Question question = controller.next();

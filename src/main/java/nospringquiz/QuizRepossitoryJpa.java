@@ -28,7 +28,9 @@ public class QuizRepossitoryJpa implements QuizRepository {
     @Override
     public Optional<Quiz> findById(long id) {
         EntityManager em = persistence.getEntityManager();
+        em.getTransaction().begin();
         Optional<Quiz> quiz = Optional.ofNullable(em.find(Quiz.class, id));
+        em.getTransaction().commit();
         em.close();
         return quiz;
     }

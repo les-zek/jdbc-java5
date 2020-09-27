@@ -20,6 +20,6 @@ public class Quiz {
     private long id;
 
     private String title;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Question> questions;
 }
