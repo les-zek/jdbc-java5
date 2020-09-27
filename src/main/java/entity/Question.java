@@ -21,7 +21,7 @@ public class Question implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String body;
-
+/*
     @Column(nullable = false)
     private String option1;
 
@@ -33,6 +33,9 @@ public class Question implements Serializable {
 
     @Column(nullable = false)
     private String option4;
+*/
+    @Embedded
+    private Option option;
 
     @Column(nullable = false)
     private int validOption;

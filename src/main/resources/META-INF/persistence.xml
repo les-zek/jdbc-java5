@@ -23,7 +23,7 @@ http://java.sun.com/xml/ns/persistence "
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <!-- database connection -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/quiz" />
             <property name="javax.persistence.jdbc.user" value="root"/>
