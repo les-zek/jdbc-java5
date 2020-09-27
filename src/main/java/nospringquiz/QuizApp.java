@@ -2,36 +2,44 @@ package nospringquiz;
 
 import entity.Option;
 import entity.Question;
+import entity.Quiz;
 import jpa.MyPersistence;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class QuizApp {
-    public static void initData(QuestionRepository repository) {
+    public static void initData(QuestionRepository repository, QuizRepository quizRepository) {
+        Set<Question> questions = new HashSet<>();
+
         Question q = Question.builder()
                 .body("Wybierz słowo kluczowe Javy")
                 .option(Option.builder().option1("Char").option2("integer").option3("boolean").option4("real").build())
-    /*            .option1("Char")
-                .option2("integer")
-                .option3("boolean")
-                .option4("real")
-      */
+                /*            .option1("Char")
+                            .option2("integer")
+                            .option3("boolean")
+                            .option4("real")
+                  */
                 .validOption(3)
                 .points(5)
                 .build();
+        questions.add(q);
         repository.save(q);
         q = Question.builder()
                 .body("Wskaż instrukcję przerywającą iteracje")
                 .option(Option.builder().option1("switch").option2("return").option3("continue").option4("break").build())
-        /*
-                .option1("switch")
-                .option2("return")
-                .option3("continue")
-                .option4("break")
-          */
+                /*
+                        .option1("switch")
+                        .option2("return")
+                        .option3("continue")
+                        .option4("break")
+                  */
                 .validOption(4)
                 .points(5)
                 .build();
+        questions.add(q);
+
         repository.save(q);
         q = Question.builder()
                 .body("Które wyrażenie jest fałszem ")
@@ -45,14 +53,20 @@ public class QuizApp {
                 .validOption(3)
                 .points(5)
                 .build();
+        questions.add(q);
+
         repository.save(q);
+        Quiz quiz = Quiz.builder().title("Język Java").questions(questions).build();
+        quizRepository.save(quiz);
     }
 
     public static void main(String[] args) {
         QuestionRepository questionRepository = new QuestionRepositoryJpa(MyPersistence.QUIZ);
-             initData(questionRepository);
         //    questionRepository.findAll().forEach(System.out::println);
-        QuizService quizService = new QuizServiceJpa(questionRepository);
+        QuizRepository quizRepository = new QuizRepossitoryJpa(MyPersistence.QUIZ);
+        initData(questionRepository, quizRepository);
+
+        QuizService quizService = new QuizServiceJpa(quizRepository);
         QuizController controller = new QuizController(quizService);
         Scanner scanner = new Scanner(System.in);
         while (true) {
