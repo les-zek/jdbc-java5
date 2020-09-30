@@ -1,5 +1,7 @@
 package nospringquiz;
-
+/*
+java - SQL connections
+ */
 import entity.Option;
 import entity.Question;
 import entity.Quiz;
